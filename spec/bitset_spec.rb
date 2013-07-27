@@ -264,4 +264,27 @@ describe Bitset do
       serialized.cardinality.should == 2
     end
   end
+
+  describe :each_set_with_index do
+    it 'does not invoke block when all bits clear' do
+      set = Bitset.new( 42 )
+      expect { |block| set.each_set_with_index( &block ) }.not_to yield_control
+    end
+
+    it 'invokes the block with the index of a single set bit' do
+      set = Bitset.new( 64 )
+      set[32] = true
+      expect { |block| set.each_set_with_index( &block ) }.to yield_with_args( 32 )
+    end
+
+    it 'invokes the block once per set bit' do
+      set = Bitset.new( 64 )
+      set[7] = true
+      set[59] = true
+      set[31] = true
+      expect { |block|
+        set.each_set_with_index( &block )
+      }.to yield_successive_args( 7, 31, 59 )
+    end
+  end
 end

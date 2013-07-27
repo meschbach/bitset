@@ -310,6 +310,18 @@ static VALUE rb_bitset_each(VALUE self) {
     return self;
 }
 
+static VALUE rb_bitset_each_set_with_index( VALUE self ){
+    Bitset * bs = get_bitset(self);
+    int i;
+
+    for(i = 0; i < bs->len; i++) {
+        if( get_bit( bs, i ) > 0 ){
+          rb_yield( INT2NUM(i) );
+        }
+    }
+    return self;
+}
+
 static VALUE rb_bitset_marshall_dump(VALUE self) {
     Bitset * bs = get_bitset(self);
     VALUE hash = rb_hash_new();
@@ -361,6 +373,7 @@ void Init_bitset() {
     rb_define_alias(cBitset, "~", "not");
     rb_define_method(cBitset, "hamming", rb_bitset_hamming, 1);
     rb_define_method(cBitset, "each", rb_bitset_each, 0);
+    rb_define_method(cBitset, "each_set_with_index", rb_bitset_each_set_with_index, 0);
     rb_define_method(cBitset, "to_s", rb_bitset_to_s, 0);
     rb_define_singleton_method(cBitset, "from_s", rb_bitset_from_s, 1);
     rb_define_method(cBitset, "marshal_dump", rb_bitset_marshall_dump, 0);

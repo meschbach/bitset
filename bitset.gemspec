@@ -15,11 +15,9 @@ Gem::Specification.new do |s|
   s.extensions = ["ext/bitset/extconf.rb"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
   ]
   s.files = [
     "LICENSE.txt",
-    "README.rdoc",
     "Rakefile",
     "VERSION",
     "bitset.gemspec",

@@ -349,9 +349,11 @@ static VALUE rb_bitset_marshall_load(VALUE self, VALUE hash) {
 
 static VALUE rb_bitset_set_bits( VALUE self, VALUE bits ){
     Bitset * bs = get_bitset(self);
-    long index;
+    size_t index;
 
-    long bit_count = RARRAY_LEN(bits);
+    Check_Type( bits, T_ARRAY );
+
+    size_t bit_count = RARRAY_LEN(bits);
     for( index = 0; index < bit_count; index++ ){
       VALUE bit_index_value = rb_ary_entry( bits, index );
       int bit_index = NUM2INT(bit_index_value);

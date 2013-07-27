@@ -287,4 +287,13 @@ describe Bitset do
       }.to yield_successive_args( 7, 31, 59 )
     end
   end
+
+  describe :set_bits do
+    it 'sets the given bits' do
+      set = Bitset.new( 64 )
+      set.set_bits [12, 41]
+      set[12].should be_true
+      set[41].should be_true
+    end
+  end
 end
